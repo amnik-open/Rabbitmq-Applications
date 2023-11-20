@@ -1,0 +1,18 @@
+secrets:
+  web-certificate:
+    file: stunnel/stunnel.pem
+
+services:
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: 'rabbitmq:latest'
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+  python:
+    build: .
+    command: tail -f /dev/null
+    volumes:
+      - .:/code
+    depends_on:
+      - rabbitmq
